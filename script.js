@@ -9,6 +9,9 @@ sliders.forEach(slider => {
     });
 });
 
+// Variable für das Chart, damit es später zerstört werden kann
+let lifeWheelChart = null;
+
 // Generiere das Lebensrad beim Absenden des Formulars
 document.getElementById('lifeWheelForm').addEventListener('submit', function(event) {
     event.preventDefault();
@@ -25,9 +28,16 @@ document.getElementById('lifeWheelForm').addEventListener('submit', function(eve
     const finance = parseInt(document.getElementById('finance').value);
     const environment = parseInt(document.getElementById('environment').value);
 
-    // Erstelle das Radar-Diagramm
+    // Erstelle oder aktualisiere das Radar-Diagramm
     const ctx = document.getElementById('lifeWheelChart').getContext('2d');
-    const chart = new Chart(ctx, {
+
+    // Falls bereits ein Chart existiert, zerstöre es
+    if (lifeWheelChart) {
+        lifeWheelChart.destroy();
+    }
+
+    // Erstelle das neue Chart
+    lifeWheelChart = new Chart(ctx, {
         type: 'radar',
         data: {
             labels: [
