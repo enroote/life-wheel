@@ -1,33 +1,52 @@
-body {
-    font-family: Arial, sans-serif;
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Life Wheel Radar Chart</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <h1>Life Wheel</h1>
+    <form id="lifeWheelForm">
+        <label for="lifeQuality">1. How would you rate your life quality? (1-10)</label>
+        <input type="number" id="lifeQuality" name="lifeQuality" min="1" max="10" required>
 
-form {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
+        <label for="career">2. How would you rate your career quality? (1-10)</label>
+        <input type="number" id="career" name="career" min="1" max="10" required>
 
-input {
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
+        <label for="family">3. How would you rate your family quality? (1-10)</label>
+        <input type="number" id="family" name="family" min="1" max="10" required>
 
-button {
-    padding: 10px;
-    background-color: #007BFF;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-}
+        <label for="health">4. How would you rate your health? (1-10)</label>
+        <input type="number" id="health" name="health" min="1" max="10" required>
 
-.chart-container {
-    margin-top: 20px;
-    width: 100%;
-    max-width: 600px;
-}
+        <label for="friendship">5. How would you rate your friendships? (1-10)</label>
+        <input type="number" id="friendship" name="friendship" min="1" max="10" required>
+
+        <label for="romance">6. How would you rate your romantic life? (1-10)</label>
+        <input type="number" id="romance" name="romance" min="1" max="10" required>
+
+        <label for="personalGrowth">7. How would you rate your personal growth? (1-10)</label>
+        <input type="number" id="personalGrowth" name="personalGrowth" min="1" max="10" required>
+
+        <label for="fun">8. How would you rate your fun and recreation? (1-10)</label>
+        <input type="number" id="fun" name="fun" min="1" max="10" required>
+
+        <label for="finance">9. How would you rate your financial situation? (1-10)</label>
+        <input type="number" id="finance" name="finance" min="1" max="10" required>
+
+        <label for="environment">10. How would you rate your living environment? (1-10)</label>
+        <input type="number" id="environment" name="environment" min="1" max="10" required>
+
+        <button type="submit">Generate Life Wheel</button>
+    </form>
+
+    <div class="chart-container">
+        <canvas id="lifeWheelChart"></canvas>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
