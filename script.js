@@ -1,7 +1,19 @@
+// Zeige die aktuellen Werte der Slider an
+const sliders = document.querySelectorAll('.slider');
+sliders.forEach(slider => {
+    const valueSpan = document.getElementById(slider.id + 'Value');
+    valueSpan.textContent = slider.value;
+
+    slider.addEventListener('input', function() {
+        valueSpan.textContent = this.value;
+    });
+});
+
+// Generiere das Lebensrad beim Absenden des Formulars
 document.getElementById('lifeWheelForm').addEventListener('submit', function(event) {
     event.preventDefault();
 
-    // Get user input
+    // Hole die Werte der Slider
     const lifeQuality = parseInt(document.getElementById('lifeQuality').value);
     const career = parseInt(document.getElementById('career').value);
     const family = parseInt(document.getElementById('family').value);
@@ -13,25 +25,25 @@ document.getElementById('lifeWheelForm').addEventListener('submit', function(eve
     const finance = parseInt(document.getElementById('finance').value);
     const environment = parseInt(document.getElementById('environment').value);
 
-    // Create radar chart
+    // Erstelle das Radar-Diagramm
     const ctx = document.getElementById('lifeWheelChart').getContext('2d');
     const chart = new Chart(ctx, {
         type: 'radar',
         data: {
             labels: [
-                'Life Quality',
-                'Career',
-                'Family',
-                'Health',
-                'Friendship',
-                'Romance',
-                'Personal Growth',
-                'Fun & Recreation',
-                'Financial Situation',
-                'Living Environment'
+                'Lebensqualität',
+                'Karriere',
+                'Familie/Freunde',
+                'Gesundheit',
+                'Freundschaften',
+                'Liebesleben',
+                'Persönliches Wachstum',
+                'Spaß & Erholung',
+                'Finanzielle Situation',
+                'Wohnsituation'
             ],
             datasets: [{
-                label: 'Your Life Wheel',
+                label: 'Dein Lebensrad',
                 data: [lifeQuality, career, family, health, friendship, romance, personalGrowth, fun, finance, environment],
                 backgroundColor: 'rgba(0, 123, 255, 0.2)',
                 borderColor: 'rgba(0, 123, 255, 1)',
