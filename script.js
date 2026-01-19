@@ -125,32 +125,71 @@ if (downloadBtn) {
             return;
         }
 
+        // Prefer Chart.js built-in exporter when available
+        let imgData = null;
+        try {
+            if (lifeWheelChart && typeof lifeWheelChart.toBase64Image === 'function') {
+                imgData = lifeWheelChart.toBase64Image(); // returns PNG dataURL
+            } else {
+                // fallback to canvas.toDataURL (PNG recommended)
+                imgData = canvas.toDataURL('image/png');
+            }
+        } catch (err) {
+            console.error('Fehler beim Erzeugen des Bildes aus dem Canvas:', err);
+            alert('Fehler beim Erzeugen des Bildes. Öffne die Konsole für Details.');
+            return;
+        }
+
         // ensure jsPDF is available (UMD build exposes window.jspdf.jsPDF)
-        let pdf;
+        let PDFClass = null;
         if (window.jspdf && window.jspdf.jsPDF) {
-            pdf = new window.jspdf.jsPDF();
+            PDFClass = window.jspdf.jsPDF;
         } else if (typeof jsPDF !== 'undefined') {
-            // older globals
-            pdf = new jsPDF();
+            PDFClass = jsPDF;
         } else {
             alert('jsPDF library ist nicht geladen. Bitte die jsPDF-Script-Tag in index.html prüfen.');
             return;
         }
 
-        const canvasImage = canvas.toDataURL('image/jpeg', 1.0);
+        try {
+            // create PDF and fit image into the page while keeping aspect ratio
+            const pdf = new PDFClass();
+            const pageWidth = pdf.internal.pageSize.getWidth();
+            const pageHeight = pdf.internal.pageSize.getHeight();
+            const margin = 10;
+            const availableWidth = pageWidth - margin * 2;
+            const availableHeight = pageHeight - margin * 2 - 20; // leave room for title
 
-        pdf.setFontSize(20);
-        pdf.text("Dein Lebensrad", 10, 10);
-        // fit the canvas into the page width with some margins
-        const pageWidth = pdf.internal.pageSize.getWidth();
-        const margin = 10;
-        const availableWidth = pageWidth - margin * 2;
-        const imgWidth = availableWidth;
-        const imgHeight = (canvas.height / canvas.width) * imgWidth;
-        pdf.addImage(canvasImage, 'JPEG', margin, 20, imgWidth, imgHeight);
-        pdf.save('Lebensrad.pdf');
+            // get image natural dimensions from the canvas
+            const img = new Image();
+            img.onload = function() {
+                let imgWidth = availableWidth;
+                let imgHeight = (img.height / img.width) * imgWidth;
+
+                // if image is too tall, scale by height instead
+                if (imgHeight > availableHeight) {
+                    imgHeight = availableHeight;
+                    imgWidth = (img.width / img.height) * imgHeight;
+                }
+
+                pdf.setFontSize(20);
+                pdf.text("Dein Lebensrad", margin, 15);
+                const x = (pageWidth - imgWidth) / 2; // center horizontally
+                const y = 20;
+                // addImage accepts a dataURL; use PNG to preserve transparency if any
+                pdf.addImage(imgData, 'PNG', x, y, imgWidth, imgHeight);
+                pdf.save('Lebensrad.pdf');
+            };
+            img.onerror = function(e) {
+                console.error('Fehler beim Laden des erzeugten Bildes:', e);
+                alert('Fehler beim Verarbeiten des Bildes. Öffne die Konsole für Details.');
+            };
+            img.src = imgData;
+        } catch (err) {
+            console.error('Fehler beim Erstellen des PDF:', err);
+            alert('Fehler beim Erstellen des PDF. Öffne die Konsole für Details.');
+        }
     });
 } else {
-    // If the button is missing, we silently don't attach — index.html now includes the button so this is just defensive
     console.warn('Download button #download-pdf not found.');
 }
