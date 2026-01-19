@@ -1,46 +1,56 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Life Wheel Radar Chart</title>
+    <title>Lebensrad</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-    <h1>Life Wheel</h1>
+    <h1>Lebensrad</h1>
     <form id="lifeWheelForm">
-        <label for="lifeQuality">1. How would you rate your life quality? (1-10)</label>
-        <input type="number" id="lifeQuality" name="lifeQuality" min="1" max="10" required>
+        <label for="lifeQuality">1. Wie bewertest du deine Lebensqualität? (0-10)</label>
+        <input type="range" id="lifeQuality" name="lifeQuality" min="0" max="10" value="5" class="slider">
+        <span id="lifeQualityValue">5</span>
 
-        <label for="career">2. How would you rate your career quality? (1-10)</label>
-        <input type="number" id="career" name="career" min="1" max="10" required>
+        <label for="career">2. Wie bewertest du deine Karriere? (0-10)</label>
+        <input type="range" id="career" name="career" min="0" max="10" value="5" class="slider">
+        <span id="careerValue">5</span>
 
-        <label for="family">3. How would you rate your family quality? (1-10)</label>
-        <input type="number" id="family" name="family" min="1" max="10" required>
+        <label for="family">3. Wie bewertest du deine Familie/Freunde? (0-10)</label>
+        <input type="range" id="family" name="family" min="0" max="10" value="5" class="slider">
+        <span id="familyValue">5</span>
 
-        <label for="health">4. How would you rate your health? (1-10)</label>
-        <input type="number" id="health" name="health" min="1" max="10" required>
+        <label for="health">4. Wie bewertest du deine Gesundheit? (0-10)</label>
+        <input type="range" id="health" name="health" min="0" max="10" value="5" class="slider">
+        <span id="healthValue">5</span>
 
-        <label for="friendship">5. How would you rate your friendships? (1-10)</label>
-        <input type="number" id="friendship" name="friendship" min="1" max="10" required>
+        <label for="friendship">5. Wie bewertest du deine Freundschaften? (0-10)</label>
+        <input type="range" id="friendship" name="friendship" min="0" max="10" value="5" class="slider">
+        <span id="friendshipValue">5</span>
 
-        <label for="romance">6. How would you rate your romantic life? (1-10)</label>
-        <input type="number" id="romance" name="romance" min="1" max="10" required>
+        <label for="romance">6. Wie bewertest du dein Liebesleben? (0-10)</label>
+        <input type="range" id="romance" name="romance" min="0" max="10" value="5" class="slider">
+        <span id="romanceValue">5</span>
 
-        <label for="personalGrowth">7. How would you rate your personal growth? (1-10)</label>
-        <input type="number" id="personalGrowth" name="personalGrowth" min="1" max="10" required>
+        <label for="personalGrowth">7. Wie bewertest du dein persönliches Wachstum? (0-10)</label>
+        <input type="range" id="personalGrowth" name="personalGrowth" min="0" max="10" value="5" class="slider">
+        <span id="personalGrowthValue">5</span>
 
-        <label for="fun">8. How would you rate your fun and recreation? (1-10)</label>
-        <input type="number" id="fun" name="fun" min="1" max="10" required>
+        <label for="fun">8. Wie bewertest du Spaß & Erholung? (0-10)</label>
+        <input type="range" id="fun" name="fun" min="0" max="10" value="5" class="slider">
+        <span id="funValue">5</span>
 
-        <label for="finance">9. How would you rate your financial situation? (1-10)</label>
-        <input type="number" id="finance" name="finance" min="1" max="10" required>
+        <label for="finance">9. Wie bewertest du deine finanzielle Situation? (0-10)</label>
+        <input type="range" id="finance" name="finance" min="0" max="10" value="5" class="slider">
+        <span id="financeValue">5</span>
 
-        <label for="environment">10. How would you rate your living environment? (1-10)</label>
-        <input type="number" id="environment" name="environment" min="1" max="10" required>
+        <label for="environment">10. Wie bewertest du deine Wohnsituation? (0-10)</label>
+        <input type="range" id="environment" name="environment" min="0" max="10" value="5" class="slider">
+        <span id="environmentValue">5</span>
 
-        <button type="submit">Generate Life Wheel</button>
+        <button type="submit">Lebensrad generieren</button>
     </form>
 
     <div class="chart-container">
