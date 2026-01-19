@@ -1,5 +1,36 @@
 // Zeige die aktuellen Werte der Slider an
+// PALETTE: assign 9 pale rainbow colors to the first 9 sliders
+const PALETTE = [
+    '#FFC9D2', // slider-1 Pale Rose
+    '#FFD8B5', // slider-2 Pale Peach
+    '#FFF5BA', // slider-3 Pale Lemon
+    '#E7FFD4', // slider-4 Pale Mint
+    '#D0F4EA', // slider-5 Pale Aqua
+    '#D6EEFF', // slider-6 Pale Sky
+    '#D9D4FF', // slider-7 Pale Periwinkle
+    '#F0D9FF', // slider-8 Pale Lavender
+    '#FFEAF2'  // slider-9 Pale Blush
+];
+
+// expose colors as CSS variables on :root and add classes to the first 9 .slider elements
 const sliders = document.querySelectorAll('.slider');
+
+PALETTE.forEach((color, i) => {
+    // set a root-level CSS variable --slider-1 .. --slider-9
+    document.documentElement.style.setProperty(`--slider-${i + 1}`, color);
+
+    // if a corresponding slider exists, add a class and set inline accent color for immediate effect
+    if (sliders[i]) {
+        sliders[i].classList.add(`slider-${i + 1}`);
+        // prefer the accent-color API if supported
+        try {
+            sliders[i].style.accentColor = color;
+        } catch (e) {
+            // ignore if not supported
+        }
+    }
+});
+
 sliders.forEach(slider => {
     const valueSpan = document.getElementById(slider.id + 'Value');
     valueSpan.textContent = slider.value;
