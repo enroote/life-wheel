@@ -115,7 +115,7 @@ button {
 }
 
 /* ensure chart canvas has a white background so axes and fills are visible */
-lifeWheelChart {
+#lifeWheelChart {
   background: #ffffff;
   display: block; /* helps consistent sizing */
 }
