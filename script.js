@@ -56,7 +56,7 @@ document.getElementById('lifeWheelForm').addEventListener('submit', function(eve
                 label: 'Dein Lebensrad',
                 data: [lifeQuality, career, family, health, friendship, romance, personalGrowth, fun, finance, environment],
                 backgroundColor: 'rgba(0, 123, 255, 0.2)',
-                borderColor: 'rgba(0, 123, 255, 1)',
+                borderColor: 'rgba(0, 123, 255, 255)',
                 borderWidth: 1
             }]
         },
