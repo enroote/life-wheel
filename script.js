@@ -76,3 +76,15 @@ document.getElementById('lifeWheelForm').addEventListener('submit', function(eve
         }
     });
 });
+
+// Funktion zum Exportieren des Charts als PDF
+document.getElementById('download-pdf').addEventListener('click', function() {
+    const canvas = document.getElementById('lifeWheelChart');
+    const canvasImage = canvas.toDataURL('image/jpeg', 1.0);
+    
+    const pdf = new jsPDF();
+    pdf.setFontSize(20);
+    pdf.text("Dein Lebensrad", 10, 10);
+    pdf.addImage(canvasImage, 'JPEG', 10, 20, 180, 160); // Position und Größe im PDF anpassen
+    pdf.save('Lebensrad.pdf');
+});
