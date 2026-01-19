@@ -1,5 +1,5 @@
 :root{
-  /* pale rainbow for sliders 1..9 */
+  /* pale rainbow for sliders 1..10 */
   --slider-1: #FFC9D2;
   --slider-2: #FFD8B5;
   --slider-3: #FFF5BA;
@@ -9,6 +9,7 @@
   --slider-7: #D9D4FF;
   --slider-8: #F0D9FF;
   --slider-9: #FFEAF2;
+  --slider-10: #FFF3E6; /* Pale Sand for environment */
 }
 
 body {
@@ -38,6 +39,7 @@ input[type="range"].slider-6 { accent-color: var(--slider-6); }
 input[type="range"].slider-7 { accent-color: var(--slider-7); }
 input[type="range"].slider-8 { accent-color: var(--slider-8); }
 input[type="range"].slider-9 { accent-color: var(--slider-9); }
+input[type="range"].slider-10 { accent-color: var(--slider-10); }
 
 /* WebKit fallback: use color on the element and paint thumb using currentColor */
 input[type="range"] {
@@ -59,6 +61,7 @@ input[type="range"].slider-6 { color: var(--slider-6); }
 input[type="range"].slider-7 { color: var(--slider-7); }
 input[type="range"].slider-8 { color: var(--slider-8); }
 input[type="range"].slider-9 { color: var(--slider-9); }
+input[type="range"].slider-10 { color: var(--slider-10); }
 
 /* WebKit track and thumb */
 input[type="range"]::-webkit-slider-runnable-track {
