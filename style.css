@@ -1,3 +1,16 @@
+:root{
+  /* pale rainbow for sliders 1..9 */
+  --slider-1: #FFC9D2;
+  --slider-2: #FFD8B5;
+  --slider-3: #FFF5BA;
+  --slider-4: #E7FFD4;
+  --slider-5: #D0F4EA;
+  --slider-6: #D6EEFF;
+  --slider-7: #D9D4FF;
+  --slider-8: #F0D9FF;
+  --slider-9: #FFEAF2;
+}
+
 body {
     font-family: Arial, sans-serif;
     max-width: 800px;
@@ -15,6 +28,73 @@ form {
     width: 100%;
 }
 
+/* Use accent-color when available (modern browsers) */
+input[type="range"].slider-1 { accent-color: var(--slider-1); }
+input[type="range"].slider-2 { accent-color: var(--slider-2); }
+input[type="range"].slider-3 { accent-color: var(--slider-3); }
+input[type="range"].slider-4 { accent-color: var(--slider-4); }
+input[type="range"].slider-5 { accent-color: var(--slider-5); }
+input[type="range"].slider-6 { accent-color: var(--slider-6); }
+input[type="range"].slider-7 { accent-color: var(--slider-7); }
+input[type="range"].slider-8 { accent-color: var(--slider-8); }
+input[type="range"].slider-9 { accent-color: var(--slider-9); }
+
+/* WebKit fallback: use color on the element and paint thumb using currentColor */
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 6px;
+  background: #e6e6e6;
+  border-radius: 4px;
+  outline: none;
+}
+
+/* tint the track slightly with the slider color when the element has the class */
+input[type="range"].slider-1 { color: var(--slider-1); }
+input[type="range"].slider-2 { color: var(--slider-2); }
+input[type="range"].slider-3 { color: var(--slider-3); }
+input[type="range"].slider-4 { color: var(--slider-4); }
+input[type="range"].slider-5 { color: var(--slider-5); }
+input[type="range"].slider-6 { color: var(--slider-6); }
+input[type="range"].slider-7 { color: var(--slider-7); }
+input[type="range"].slider-8 { color: var(--slider-8); }
+input[type="range"].slider-9 { color: var(--slider-9); }
+
+/* WebKit track and thumb */
+input[type="range"]::-webkit-slider-runnable-track {
+  height: 6px;
+  background: #f0f0f0;
+  border-radius: 4px;
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  margin-top: -6px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 2px solid rgba(0,0,0,0.08);
+  background: currentColor; /* uses the element color (we set it per-slider) */
+  box-shadow: 0 1px 2px rgba(0,0,0,0.12);
+  cursor: pointer;
+}
+
+/* Firefox fallback: use accent-color and custom thumb sizing */
+input[type="range"]::-moz-range-track {
+  height: 6px;
+  background: #f0f0f0;
+  border-radius: 4px;
+}
+input[type="range"]::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: none;
+  background: currentColor;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.12);
+}
+
+/* Small button styles */
 button {
     padding: 10px;
     background-color: #007BFF;
