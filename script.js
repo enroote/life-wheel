@@ -1,5 +1,5 @@
 // Zeige die aktuellen Werte der Slider an
-// PALETTE: assign 9 pale rainbow colors to the first 9 sliders
+// PALETTE: assign 10 pale rainbow colors to the first 10 sliders
 const PALETTE = [
     '#FFC9D2', // slider-1 Pale Rose
     '#FFD8B5', // slider-2 Pale Peach
@@ -9,14 +9,15 @@ const PALETTE = [
     '#D6EEFF', // slider-6 Pale Sky
     '#D9D4FF', // slider-7 Pale Periwinkle
     '#F0D9FF', // slider-8 Pale Lavender
-    '#FFEAF2'  // slider-9 Pale Blush
+    '#FFEAF2', // slider-9 Pale Blush
+    '#FFF3E6'  // slider-10 Pale Sand (new)
 ];
 
-// expose colors as CSS variables on :root and add classes to the first 9 .slider elements
+// expose colors as CSS variables on :root and add classes to the first 10 .slider elements
 const sliders = document.querySelectorAll('.slider');
 
 PALETTE.forEach((color, i) => {
-    // set a root-level CSS variable --slider-1 .. --slider-9
+    // set a root-level CSS variable --slider-1 .. --slider-10
     document.documentElement.style.setProperty(`--slider-${i + 1}`, color);
 
     // if a corresponding slider exists, add a class and set inline accent color for immediate effect
