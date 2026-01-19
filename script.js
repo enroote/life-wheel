@@ -47,6 +47,19 @@ sliders.forEach(slider => {
 // Variable für das Chart, damit es später zerstört werden kann
 let lifeWheelChart = null;
 
+// small plugin that paints a white background behind the chart (helps visibility and PDF export)
+const whiteBackgroundPlugin = {
+    id: 'white_background_plugin',
+    beforeDraw: (chart) => {
+        const ctx = chart.canvas.getContext('2d');
+        ctx.save();
+        ctx.globalCompositeOperation = 'destination-over';
+        ctx.fillStyle = '#ffffff';
+        ctx.fillRect(0, 0, chart.width, chart.height);
+        ctx.restore();
+    }
+};
+
 // Generiere das Lebensrad beim Absenden des Formulars
 const form = document.getElementById('lifeWheelForm');
 if (form) {
@@ -73,7 +86,7 @@ if (form) {
             lifeWheelChart.destroy();
         }
 
-        // Erstelle das neue Chart
+        // Erstelle das neue Chart with explicit colors and background plugin
         lifeWheelChart = new Chart(ctx, {
             type: 'radar',
             data: {
@@ -92,104 +105,45 @@ if (form) {
                 datasets: [{
                     label: 'Dein Lebensrad',
                     data: [lifeQuality, career, family, health, friendship, romance, personalGrowth, fun, finance, environment],
-                    backgroundColor: 'rgba(0, 123, 255, 0.2)',
-                    borderColor: 'rgba(0, 123, 255, 1)',
-                    borderWidth: 1
+                    backgroundColor: 'rgba(0, 123, 255, 0.22)', // semi-transparent fill
+                    borderColor: 'rgba(0, 123, 255, 1)',        // strong border
+                    pointBackgroundColor: 'rgba(0, 123, 255, 1)',
+                    pointBorderColor: '#fff',
+                    borderWidth: 2
                 }]
             },
             options: {
-                scales: {
-                    r: {
-                        angleLines: {
-                            display: true
-                        },
-                        suggestedMin: 0,
-                        suggestedMax: 10,
-                        ticks: {
-                            stepSize: 2
+                responsive: true,
+                maintainAspectRatio: true,
+                plugins: {
+                    legend: {
+                        labels: {
+                            color: '#222' // legend color
                         }
                     }
+                },
+                scales: {
+                    r: {
+                        grid: {
+                            color: '#dfe6f0' // light grid lines
+                        },
+                        angleLines: {
+                            color: '#e6e6e6' // light radial lines (was angleLines.display previously)
+                        },
+                        pointLabels: {
+                            color: '#222' // category labels color
+                        },
+                        ticks: {
+                            color: '#444',
+                            stepSize: 2,
+                            backdropColor: 'rgba(255,255,255,0)' // no dark backdrop
+                        },
+                        suggestedMin: 0,
+                        suggestedMax: 10
+                    }
                 }
-            }
+            },
+            plugins: [whiteBackgroundPlugin]
         });
     });
-}
-
-// Funktion zum Exportieren des Charts als PDF
-const downloadBtn = document.getElementById('download-pdf');
-if (downloadBtn) {
-    downloadBtn.addEventListener('click', function() {
-        const canvas = document.getElementById('lifeWheelChart');
-        if (!canvas) {
-            alert('Kein Chart gefunden — bitte erst das Lebensrad generieren.');
-            return;
-        }
-
-        // Prefer Chart.js built-in exporter when available
-        let imgData = null;
-        try {
-            if (lifeWheelChart && typeof lifeWheelChart.toBase64Image === 'function') {
-                imgData = lifeWheelChart.toBase64Image(); // returns PNG dataURL
-            } else {
-                // fallback to canvas.toDataURL (PNG recommended)
-                imgData = canvas.toDataURL('image/png');
-            }
-        } catch (err) {
-            console.error('Fehler beim Erzeugen des Bildes aus dem Canvas:', err);
-            alert('Fehler beim Erzeugen des Bildes. Öffne die Konsole für Details.');
-            return;
-        }
-
-        // ensure jsPDF is available (UMD build exposes window.jspdf.jsPDF)
-        let PDFClass = null;
-        if (window.jspdf && window.jspdf.jsPDF) {
-            PDFClass = window.jspdf.jsPDF;
-        } else if (typeof jsPDF !== 'undefined') {
-            PDFClass = jsPDF;
-        } else {
-            alert('jsPDF library ist nicht geladen. Bitte die jsPDF-Script-Tag in index.html prüfen.');
-            return;
-        }
-
-        try {
-            // create PDF and fit image into the page while keeping aspect ratio
-            const pdf = new PDFClass();
-            const pageWidth = pdf.internal.pageSize.getWidth();
-            const pageHeight = pdf.internal.pageSize.getHeight();
-            const margin = 10;
-            const availableWidth = pageWidth - margin * 2;
-            const availableHeight = pageHeight - margin * 2 - 20; // leave room for title
-
-            // get image natural dimensions from the canvas
-            const img = new Image();
-            img.onload = function() {
-                let imgWidth = availableWidth;
-                let imgHeight = (img.height / img.width) * imgWidth;
-
-                // if image is too tall, scale by height instead
-                if (imgHeight > availableHeight) {
-                    imgHeight = availableHeight;
-                    imgWidth = (img.width / img.height) * imgHeight;
-                }
-
-                pdf.setFontSize(20);
-                pdf.text("Dein Lebensrad", margin, 15);
-                const x = (pageWidth - imgWidth) / 2; // center horizontally
-                const y = 20;
-                // addImage accepts a dataURL; use PNG to preserve transparency if any
-                pdf.addImage(imgData, 'PNG', x, y, imgWidth, imgHeight);
-                pdf.save('Lebensrad.pdf');
-            };
-            img.onerror = function(e) {
-                console.error('Fehler beim Laden des erzeugten Bildes:', e);
-                alert('Fehler beim Verarbeiten des Bildes. Öffne die Konsole für Details.');
-            };
-            img.src = imgData;
-        } catch (err) {
-            console.error('Fehler beim Erstellen des PDF:', err);
-            alert('Fehler beim Erstellen des PDF. Öffne die Konsole für Details.');
-        }
-    });
-} else {
-    console.warn('Download button #download-pdf not found.');
 }
