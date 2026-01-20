@@ -93,10 +93,10 @@ if (form) {
                 labels: [
                     'Lebensqualität',
                     'Karriere',
-                    'Familie/Freunde',
+                    'Familie & Freunde',
                     'Gesundheit',
                     'Freundschaften',
-                    'Liebesleben',
+                    'Liebe',
                     'Persönliches Wachstum',
                     'Spaß & Erholung',
                     'Finanzielle Situation',
