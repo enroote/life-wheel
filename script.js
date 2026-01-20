@@ -15,6 +15,50 @@ const PALETTE = [
 
 // expose colors as CSS variables on :root and add classes to the first 10 .slider elements
 const sliders = document.querySelectorAll('.slider');
+// PDF-Download: erzeugt ein PDF aus dem Canvas und lädt es herunter
+const downloadBtn = document.getElementById('download-pdf');
+if (downloadBtn) {
+    downloadBtn.addEventListener('click', function () {
+        if (!lifeWheelChart) {
+            alert('Bitte zuerst das Lebensrad generieren.');
+            return;
+        }
+
+        const canvas = document.getElementById('lifeWheelChart');
+        if (!canvas) return;
+
+        // conv to image
+        const imgData = canvas.toDataURL('image/png');
+
+        // use jsPDF (UMD exposes window.jspdf)
+        const { jsPDF } = window.jspdf || {};
+        if (!jsPDF) {
+            alert('jsPDF ist nicht geladen. PDF-Export nicht möglich.');
+            return;
+        }
+
+        // create PDF and fit the image preserving aspect ratio
+        const pdf = new jsPDF({ orientation: 'landscape', unit: 'pt', format: 'a4' });
+        const pdfWidth = pdf.internal.pageSize.getWidth();
+        const pdfHeight = pdf.internal.pageSize.getHeight();
+
+        const imgProps = pdf.getImageProperties(imgData);
+        let imgWidth = pdfWidth;
+        let imgHeight = (imgProps.height * imgWidth) / imgProps.width;
+
+        if (imgHeight > pdfHeight) {
+            imgHeight = pdfHeight;
+            imgWidth = (imgProps.width * imgHeight) / imgProps.height;
+        }
+
+        const x = (pdfWidth - imgWidth) / 2;
+        const y = (pdfHeight - imgHeight) / 2;
+
+        pdf.addImage(imgData, 'PNG', x, y, imgWidth, imgHeight);
+        pdf.save('lebensrad.pdf');
+    });
+}
+
 
 PALETTE.forEach((color, i) => {
     // set a root-level CSS variable --slider-1 .. --slider-10
