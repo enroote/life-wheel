@@ -1,16 +1,16 @@
 // Zeige die aktuellen Werte der Slider an
 // PALETTE: assign 10 pale rainbow colors to the first 10 sliders
 const PALETTE = [
-    '#FFC9D2', // slider-1 Pale Rose
-    '#FFD8B5', // slider-2 Pale Peach
-    '#FFF5BA', // slider-3 Pale Lemon
-    '#E7FFD4', // slider-4 Pale Mint
-    '#D0F4EA', // slider-5 Pale Aqua
-    '#D6EEFF', // slider-6 Pale Sky
-    '#D9D4FF', // slider-7 Pale Periwinkle
-    '#F0D9FF', // slider-8 Pale Lavender
-    '#FFEAF2', // slider-9 Pale Blush
-    '#FFF3E6'  // slider-10 Pale Sand (environment)
+    '#fb8296', // slider-1 Pale Rose
+    '#f8b479', // slider-2 Pale Peach
+    '#ffea75', // slider-3 Pale Lemon
+    '#b3fd77', // slider-4 Pale Mint
+    '#77f8d4', // slider-5 Pale Aqua
+    '#7ac5fb', // slider-6 Pale Sky
+    '#8d7ffa', // slider-7 Pale Periwinkle
+    '#ca84f9', // slider-8 Pale Lavender
+    '#f984b1', // slider-9 Pale Blush
+    '#f8ba78'  // slider-10 Pale Sand (environment)
 ];
 
 // expose colors as CSS variables on :root and add classes to the first 10 .slider elements
@@ -107,7 +107,7 @@ if (form) {
                     data: [lifeQuality, career, family, health, friendship, romance, personalGrowth, fun, finance, environment],
                     backgroundColor: 'rgba(0, 123, 255, 0.22)', // semi-transparent fill
                     borderColor: 'rgba(0, 123, 255, 1)',        // strong border
-                    pointBackgroundColor: 'rgba(0, 123, 255, 1)',
+                    pointBackgroundColor: PALETTE, // use each slider's color for its point
                     pointBorderColor: '#fff',
                     borderWidth: 2
                 }]
